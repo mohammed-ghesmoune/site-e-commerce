@@ -1,0 +1,24 @@
+{% for category in categories %}
+	<li class="nav-item  mx-3 dropdown d-flex align-items-center">
+		<a class="dropdown-toggle submenu text-dark py-4 px-2" data-toggle="dropdown" href="{{ path('product_list', {category : category.name}) }}">
+
+			{{ category.name | upper}}
+		</a>
+		<div class="dropdown-menu">
+			<a class="dropdown-item " href="{{ path('product_list', {category : category.name}) }}">Tous les articles</a>
+
+			{% for subCategory in category.subCategories %}
+
+
+				<a class="dropdown-item " href="{{ path('product_list', {category : category.name , subCategory:subCategory.name}) }}">
+
+					{{ subCategory.name | upper }}
+
+				</a>
+			{% endfor %}
+
+		</div>
+	</li>
+{% endfor %}
+
+

@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiment
+{% endblock %}
+
+{% form_theme form 	'bootstrap_4_horizontal_layout.html.twig' %}
+
+{% block body %}
+	<div class="container-md mt-5" style="min-height:50vh">
+		<div class="row mt-5">
+			<div class="col-md-7" id="paymentStep">
+				{% include "payment/_payment_addresses.html.twig" %}
+
+			</div>
+			<div class=" col-md-5 align-self-start mt-5 ">
+				<div class=" bg-light p-3">
+					<div class="font-weight-bold py-3 mb-3">Récapitulatif de la commande</div>
+					<div class="d-flex justify-content-between">
+						<div>Total des articles</div>
+						<div>{{ orders[0].cart.amount  |number_format(2, '.', ' ')}}
+							€</div>
+					</div>
+					<div class="d-flex justify-content-between">
+						<div>Frais de livraison</div>
+						<div>{{ fee | number_format(2, '.', ' ') }}
+							€</div>
+					</div>
+					<div class="d-flex justify-content-between">
+						<div class="text-warning">Réduction
+						</div>
+						<div class="text-warning">{{ discount | number_format(2, '.', ' ')}}
+							€</div>
+					</div>
+					<div class="d-flex justify-content-between mt-3 pt-3 border-top">
+						<div class="font-weight-bold">Total</div>
+						<div class="font-weight-bold">{{ realAmount | number_format(2, '.', ' ')}}
+							€</div>
+					</div>
+
+				</div>
+				<div class=" mt-5">
+					<a class="btn btn-outline-secondary d-block rounded-0" href="{{ path('cart')}}">
+						Retourner au panier</a>
+				</div>
+			</div>
+
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent()}}
+	<script src="{{ asset('js/payment.js') }}"></script>
+{% endblock %}

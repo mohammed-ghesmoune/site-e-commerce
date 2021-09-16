@@ -1,0 +1,40 @@
+{% if nouveautes %}
+
+	<div class="container-md">
+		<div class="h1 text-center text-danger text-uppercase py-5">Nouveautés</div>
+		<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 mt-3">
+			{% for product in nouveautes %}
+				<div class="col mb-5">
+					<div class="card h-100 ">
+						<img src="{{asset('uploads/images/' ~ product.colors[0].images[0].url)}}" class="card-img-top" alt="...">
+						<div class="card-body">
+							<h5 class="card-title text-dark" style="height:50px; font-weight:600;">{{ product.name | title }}</h5>
+							<h5 class="card-title text-center text-secondary">{{ product.colors[0].sizes[0].price}}
+								&euro;</h5>
+							{% for color in product.colors %}
+								{% for size in color.sizes %}
+									{% for sale in size.sales %}
+										{% if "now"|date("Y-m-d H:i:s") > sale.startDate| date("Y-m-d H:i:s") and "now"|date("Y-m-d H:i:s") < sale.endDate| date("Y-m-d H:i:s")%}
+											<p class="text-warning">
+												-
+												{{ sale.rate}}
+												% sur l'achat de
+												{{ sale.minItems}}
+												articles de taille
+												{{ size.name}}</p>
+										{% endif %}
+									{% endfor %}
+								{% endfor %}
+							{% endfor %}
+
+						</div>
+						<div class="card-footer p-0">
+							<a href="{{ path('product_show', {slug : product.slug , id : product.id}) }}" class="btn btn-dark d-block rounded-0 py-2">VOIR +</a>
+						</div>
+					</div>
+				</div>
+
+			{% endfor %}
+		</div>
+	</div>
+{% endif %}

@@ -1,0 +1,61 @@
+FROM php:7.4-fpm
+
+ARG UID=1000
+ARG USERNAME=ghm
+
+# Install dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+wget \
+git \
+curl \
+zip \
+unzip \
+g++ \
+libonig-dev \
+libxml2-dev \
+zlib1g-dev \
+libpng-dev \
+libicu-dev \
+libfreetype6-dev \
+libjpeg62-turbo-dev  \
+# Remove cache
+&& apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install gd
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+&& docker-php-ext-install -j$(nproc) gd
+
+#install intl
+RUN docker-php-ext-configure intl \
+&& docker-php-ext-install intl
+
+# Activate php extentions
+RUN docker-php-ext-install \
+pdo_mysql 
+
+# Configure php-cli
+RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
+
+# Install composer 
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+&& php composer-setup.php \
+&& php -r "unlink('composer-setup.php');" \
+&& mv composer.phar /usr/local/bin/composer
+
+# Install symfony-cli
+RUN wget https://get.symfony.com/cli/installer -O - | bash \
+&& mv /root/.symfony/bin/symfony /usr/local/bin/symfony
+
+# Create a new system user
+RUN useradd -G www-data,sudo -u "${UID}" --shell /bin/bash --create-home "${USERNAME}"
+
+WORKDIR /var/www
+
+#RUN mkdir -p /home/"${USERNAME}"/html \
+#&& chown -R "${USERNAME}:${USERNAME}" /home/"${USERNAME}"/html \
+#&& rm -rf /var/www/* \
+#&& ln -s /home/"${USERNAME}"/html /var/www
+#WORKDIR /home/"${USERNAME}"/html
+
+
+USER "${USERNAME}"

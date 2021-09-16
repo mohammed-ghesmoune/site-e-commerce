@@ -1,0 +1,27 @@
+
+
+    {% if invoices %}
+        <table class="table w-100 mx-auto table-striped table-hover table-borderless " >
+            <thead class="thead-light">
+                <tr>
+                    <th>N° commande</th>
+                    <th>Date</th>
+                    <th>Montant</th>
+                    <th>Facture</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for invoice in invoices %}
+                    <tr>
+                        <td>{{invoice.name}}</td>
+                        <td>{{invoice.createdAt | date('d-m-y')}}</td>
+                         <td>{{invoice.cart.realAmount | number_format(2, '.', ' ')}} &euro;</td> 
+                        <td><a href="{{invoice.url}}" target="_blank"> Relevé de facture</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    {% else %}
+        <div class="py-3 text-center"> Vous n'avez aucune commande enregistrée </div>
+    {% endif %}

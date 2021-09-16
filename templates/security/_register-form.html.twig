@@ -1,0 +1,18 @@
+<div id="register-form" class="{{ register ? '' : 'd-none'}}">
+
+	{{ form_start (registerForm,{'action': path('register'), 'method': 'POST','attr':{'class':'securityForm'}})}}
+
+	{# {% for flashError in app.flashes('verify_email_error') %}
+		<div class="alert alert-danger" role="alert">{{ flashError }}</div>
+	{% endfor %} #}
+
+	{{ form_row (registerForm.email)}}
+	{{ form_row (registerForm.plainPassword)}}
+	{{ form_row (registerForm.agreeTerms)}}
+
+	<div class="form-group">
+		<button type="submit" class="btn btn-dark btn-block rounded-0 mt-3 text-uppercase" {#formnovalidate#}>Inscrivez-vous !</button>
+	</div>
+
+	{{ form_end (registerForm)}}
+</div>

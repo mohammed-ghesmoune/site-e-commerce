@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panier
+{% endblock %}
+
+{% block body %}
+	<div class="container-md mt-5" style="min-height:40vh">
+		<h3 class="mt-5">
+			Votre Panier
+			{{ orders ? '' : 'est vide' }}
+			{#<span class="small">( {{ articles ?? 0 }} article{{ articles >1 ?'s':''}} )</span>#}
+		</h3>
+		<div class="row">
+			<div class="col-md-7 mt-3 ">
+				{% for order in orders %}
+					<div class="card mb-3 position-relative">
+						<div class="row no-gutters">
+							<div
+								class=" p-3" style="width:33%">
+								<!-- <a href=""></a> -->
+								<img src="{{asset('uploads/images/' ~ order.size.color.images[0].url)}}" class="card-img" alt="...">
+							</div>
+							<div class="" style="width:66%">
+								<div class="card-body">
+									<div class="card-title h5" style="font-weight:600">{{ order.size.product.name | title}}</div>
+									<div>Prix :
+										{{order.size.price}}
+										&euro;</div>
+									<div>Couleur :
+										<input type="color" value="{{order.size.color.name}}" disabled /></div>
+									<div>Taille :
+										{{order.size.name}}</div>
+									<div>Quantité :
+										{{order.quantity}}</div>
+									{% for sale in order.size.sales %}
+										{% if "now"|date("Y-m-d H:i:s") > sale.startDate| date("Y-m-d H:i:s") and "now"|date("Y-m-d H:i:s") < sale.endDate| date("Y-m-d H:i:s") and order.quantity >= sale.minItems  %}
+											<div class="text-warning mt-3">
+												{{ sale.rate}}
+												% de réduction.
+											</div>
+										{% endif %}
+									{% endfor %}
+								</div>
+							</div>
+							<div class="delete-update-cart position-absolute d-flex flex-column " style="top:30%;right:0">
+								<a href="{{ path('cart_delete', {id : order.id}) }}" role="button" class="btn btn-light" data-tooltips="tooltip" data-placement="top" title="Supprimer">
+									<i class="fa fa-trash text-dark" aria-hidden="true"></i>
+								</a>
+								<a href="{{ path('cart_update', {id : order.id}) }}" role="button" class="btn btn-light" data-tooltips="tooltip" data-placement="top" title="Modifier">
+									<i class="fa fa-pencil text-dark " aria-hidden="true"></i>
+								</a>
+							</div>
+						</div>
+					</div>
+				{% else %}
+					<a class="btn btn-dark mt-3 rounded-0" href="{{ path('product_list')}}">Commencez vos achats</a>
+				{% endfor %}
+			</div>
+			{% if orders %}
+				<div class=" col-md-5 align-self-start mt-3">
+					<div class=" bg-light p-3">
+						<div class="font-weight-bold py-3 mb-3">Récapitulatif de la commande</div>
+						<div class="d-flex justify-content-between">
+							<div>Total des articles</div>
+							<div>{{ orders[0].cart.amount  |number_format(2, '.', ' ')}}
+								&euro;</div>
+						</div>
+						<div class="d-flex justify-content-between">
+							<div>Frais de livraison</div>
+							<div>{{ fee | number_format(2, '.', ' ') }}
+								&euro;</div>
+						</div>
+						<div class="d-flex justify-content-between">
+							<div class="text-warning">Réduction</div>
+							<div class="text-warning">{{ discount | number_format(2, '.', ' ')}}
+								&euro;</div>
+						</div>
+						<div class="d-flex justify-content-between mt-3 pt-3 border-top">
+							<div class="font-weight-bold">Total</div>
+							<div class="font-weight-bold">{{ realAmount | number_format(2, '.', ' ')}}
+								&euro;</div>
+						</div>
+					</div>
+					<div class="form-row pt-3">
+						<div class=" col-md-6 form-group">
+							<a class="btn btn-outline-secondary d-block rounded-0" href="{{ path('product_list')}}">
+								Continuez vos achats</a>
+						</div>
+						<div class="col-md-6 form-group">
+							<a class="btn btn-dark d-block rounded-0" href="{{ path('payment')}}">Commander</a>
+						</div>
+					</div>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}

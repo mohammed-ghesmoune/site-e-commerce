@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Accueil
+{% endblock %}
+{% block stylesheets %}
+
+	{{parent()}}
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick-theme.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.css">
+{% endblock %}
+
+{% block body %}
+
+
+	<div class="home-carousel">
+		<div>
+			<div class="home-carousel-background" style="background-image: url('img/bg-11.jpg');">
+				<div class="home-carousel-title">Homme</div>
+				<a class="home-carousel-button" href="{{ path('product_list', {category : 'homme'}) }}">Voir la collection</a>
+
+			</div>
+		</div>
+		<div>
+			<div class="home-carousel-background" style="background-image:url('img/bg-2.jpg');">
+				<div class="home-carousel-title">Femme</div>
+				<a class="home-carousel-button" href="{{ path('product_list', {category : 'femme'}) }}">Voir la collection</a>
+
+			</div>
+		</div>
+		<div>
+			<div class="home-carousel-background" style="background-image: url('img/bg-3.jpg');">
+				<div class="home-carousel-title">Enfant</div>
+				<a class="home-carousel-button" href="{{ path('product_list', {category : 'enfants'}) }}">Voir la collection</a>
+
+
+			</div>
+		</div>
+    </div>
+    
+    {{ render_esi(controller('App\\Controller\\HomeController::nouveaute')) }}
+    {{ render_esi(controller('App\\Controller\\HomeController::promotion')) }}
+
+
+{% endblock %}
+{% block javascripts %}
+	{{parent()}}<script src="{{asset('js/slick.min.js')}}"></script>
+	<script src="{{asset('js/home-carousel.js')}}"></script>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réinitialiser le mot de passe
+{% endblock %}
+
+{% block body %}
+	<div class="container-md mt-5" style="min-height:40vh">
+		<div class="row flex-column">
+            <h3 class="text-center text-uppercase mb-5">réinitialisez votre mot de passe</h3>
+			<div class="col-md-5 mx-auto">
+
+				{{ form_start(resetForm) }}
+				{{ form_row(resetForm.plainPassword) }}
+				<button type="submit" class="btn btn-dark btn-block rounded-0 mt-3 text-uppercase" formnovalidate>Réinitialiser le mot de passe</button>
+				{{ form_end(resetForm) }}
+			</div>
+		</div>
+	</div>
+{% endblock %}

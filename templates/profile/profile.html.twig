@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Mon Profil
+{% endblock %}
+
+{% block body %}
+
+	<div class="container mt-5" >
+
+		<h3 class="my-5">
+			Mon compte</h3>
+		<div class="profil">
+			<div class="bg-dark text-white pl-3 mb-3 font-weight-bold h5 py-1">
+				Mon profil
+			</div>
+            <div id="personalInformations">
+				{% include 'profile/_personal_informations.html.twig' %}
+			</div>
+			<div id="contactInformations">
+				{% include 'profile/_contact_informations.html.twig' %}
+			</div>
+			<div id="emailInformations">
+				{% include 'profile/_change_email.html.twig' %}
+			</div>
+			<div id="passwordInformations">
+				{% include 'profile/_change_password.html.twig' %}
+			</div>
+		</div>
+
+		<div class="carnet_adresses mt-5">
+			<div class="bg-dark text-white pl-3 mb-3 font-weight-bold h5 py-1">
+				Mon carnet d'adresses
+			</div>
+			<div id="addressInformations">
+				{% include 'profile/_address.html.twig' %}
+			</div>
+		</div>
+		<div class="mes_commande mt-5">
+
+			<div class="bg-dark text-white pl-3 mb-3 font-weight-bold h5 py-1">
+				Mes commandes
+			</div>
+<div class="table-responsive-md">
+			{% include 'profile/_invoices.html.twig' %}
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
+{% block javascripts %}
+	{{ parent()}}
+	<script src="{{ asset('js/profil.js') }}"></script>
+{% endblock %}

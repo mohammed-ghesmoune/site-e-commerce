@@ -1,0 +1,97 @@
+<div class="row">
+	<div class="col-md-2 d-flex flex-row flex-md-column justify-content-start align-items-center">
+		{% for color in product.colors %}
+
+			<div class="card  mb-3 mr-3 mr-md-0" style="max-width: 100px;">
+				<a href=" {{ path('product_show', {slug: product.slug, id :product.id, colorIndex : loop.index0} ) }}" class="btn-img">
+					<img src="{{asset('uploads/images/' ~ color.images[0].url)}}" class=" card-img" alt=" ...">
+				</a>
+			</div>
+		{% endfor %}
+	</div>
+
+	<div class="col-md-10">
+		<div class="card mb-3">
+			<div class="row no-gutters">
+				<div class="col-md-5">
+					<a href=""></a>
+					<img src="{{asset('uploads/images/' ~ product.colors[ colorIndex].images[0].url) }}" class=" card-img" alt="...">
+				</div>
+				<div class="col-md-7">
+					<div class="card-body">
+						<div class="card-title h5 text-dark " style="font-weight:600">{{ product.name }}</div>
+						{% for sale in product.colors[ colorIndex ].sizes[sizeIndex].sales %}
+							{% if "now"|date("Y-m-d H:i:s") > sale.startDate| date("Y-m-d H:i:s") and "now"|date("Y-m-d H:i:s") < sale.endDate| date("Y-m-d H:i:s")%}
+								<p class="text-warning mt-3">
+									-
+									{{ sale.rate}}
+									% sur l'achat de
+									{{ sale.minItems}}
+									articles.
+								</p>
+							{% endif %}
+						{% endfor %}
+						<div class="mb-3">
+							Prix :
+							{{ product.colors[colorIndex].sizes[sizeIndex].price}}
+							&euro;</div>
+						<div class="mb-3">
+							Couleur :
+						</br>
+						{% for color in product.colors %}
+							<a href=" {{ path('product_show', {slug: product.slug, id :product.id, colorIndex : loop.index0} ) }}" class="btn-color" style="text-decoration:none">
+								<input type="color" value="{{ color.name}}" disabled style="width:40px; height:40px; cursor:pointer;"/>
+							</a>
+
+						{% endfor %}
+					</div>
+					<div class="mb-3">
+						Taille :</br>
+					{% for size in product.colors[ colorIndex ].sizes %}
+						<a href="  {{ path('product_show', {slug: product.slug, id :product.id, colorIndex : colorIndex, sizeIndex : loop.index0} ) }}" class="btn-size rounded-0 btn btn-{{ sizeIndex == loop.index0 ? 'secondary' : 'outline-secondary' }}">{{ size.name}}
+						</a>
+					{% endfor %}
+				</div>
+
+				{% if product.colors[ colorIndex ].sizes[sizeIndex].stock > 0 %}
+					{{form_start(quantity_form ,{
+								'action': path('product_show', { slug: product.slug, id :product.id, colorIndex : colorIndex, sizeIndex : sizeIndex}), 
+								'method':'POST',
+								'attr':{'data-redirect': path('cart')}
+
+							})
+							}}
+					Quantité:
+					<br>
+					{{form_errors(quantity_form.quantity)}}
+
+					<div class="d-flex align-items-center mb-3">
+						<div class=" btn btn-outline-secondary rounded-0 font-weight-bold decrement">
+							&minus;
+						</div>
+						{{form_widget(quantity_form.quantity,{'attr': { 'value': 1,'style': 'width:60px', 'class':'text-center rounded-0 border-secondary'}})}}
+						{# <div class="quantityValue border border-secondary rounded-0 p-2">1</div> #}
+						<div class=" btn btn-outline-secondary rounded-0 font-weight-bold increment">
+							&plus;
+						</div>
+					</div>
+					<button type="submit" class="btn btn-dark rounded-0">Ajouter au panier</button>
+					{{form_end(quantity_form)}}
+				{% else %}
+					<div class="mt-3">
+						<button class="btn btn-danger ">Rupture de stock</button>
+					</div>
+				{% endif %}
+
+			</div>
+		</div>
+	</div>
+</div>
+{% if is_granted('ROLE_ADMIN')%}
+	<div class="mt-5 d-flex justify-content-center">
+		<a href="{{ path('product_edit', {'id': product.id })}}" class="btn btn-danger mr-3 rounded-0">Modifier/Supprimer</a>
+
+		<a href=" {{ path('sale',{'id' : product.colors[ colorIndex ].sizes[sizeIndex].id})}}" class="btn btn-info rounded-0">Ajouter une promo</a>
+	</div>
+{% endif %}
+<div></div>

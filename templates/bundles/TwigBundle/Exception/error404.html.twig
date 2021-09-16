@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class=" container-md d-flex flex-column justify-content-center align-items-center py-5" style="min-height:40vh">
+    <h1>Oups !</h1>
+    <h3>. 404 . </h3>
+
+    <p class="text-center">
+        La page que vous recherchez n'est pas disponible
+    </p>
+    <a class="btn btn-dark rounded-0 text-uppercase" href="{{path('home')}}"> retourner à la page d'accueil</a>
+    </div>
+{% endblock %}

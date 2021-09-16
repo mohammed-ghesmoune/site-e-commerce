@@ -1,0 +1,28 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Ma facture
+{% endblock %}
+{% set url = app.session.get('invoicePdf') %}
+{% block body %}
+	<div class="container-md mt-5" style="min-height:40vh">
+		<h3 class="mb-5">
+			MA facture</h3>
+		<ul class="bg-light p-5 list-unstyled">
+			<li class="mb-3">
+				<a href="{{url}}" target="_blank" class="text-secondary">
+					<i class="fa fa-file-pdf-o lead" aria-hidden="true"></i>
+					Télécharger la facture (PDF)</a>
+			</li>
+			<li>
+				<a href="#" class="text-secondary">
+					<i class="fa fa-envelope lead" aria-hidden="true"></i>
+					Recevoir la facture par courier</a>
+			</li>
+		</ul>
+		<a href="{{ path("product_list")}}" class="btn btn-dark rounded-0">
+			<i class="fa fa-arrow-left" aria-hidden="true"></i>
+			Retour à la page des produits
+		</a>
+	</div>
+{% endblock %}

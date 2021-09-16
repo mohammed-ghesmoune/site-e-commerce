@@ -1,0 +1,56 @@
+FROM php:7.4-fpm
+
+ARG USERNAME=ghm
+ARG UID=1000
+ARG GID=1000
+
+# Install dependencies
+RUN apt-get update --fix-missing && apt-get install -y --no-install-recommends \
+locales apt-utils \
+sudo \
+wget \
+git \
+curl \
+libzip-dev \
+unzip \
+g++ \
+libonig-dev \
+libxslt-dev \
+libxml2-dev \
+zlib1g-dev \
+libpng-dev \
+libicu-dev \
+libfreetype6-dev \
+libjpeg62-turbo-dev  \
+# Remove cache
+&& apt-get clean && rm -rf /var/lib/apt/lists/* 
+
+RUN \
+# Configure php-cli
+cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini \
+\
+# install php extentions
+&& docker-php-ext-configure zip &&  docker-php-ext-install zip \
+&& docker-php-ext-configure intl && docker-php-ext-install intl \
+&& docker-php-ext-configure gd --with-freetype --with-jpeg && docker-php-ext-install -j$(nproc) gd \
+&& pecl install apcu && docker-php-ext-enable apcu \
+&& docker-php-ext-install opcache pdo pdo_mysql 
+RUN docker-php-ext-install xml &&  docker-php-ext-enable xml
+RUN \
+# install composer
+curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+\
+# install symfony-cli
+&& curl -sS https://get.symfony.com/cli/installer | bash \
+&& mv /root/.symfony/bin/symfony /usr/local/bin/symfony 
+
+RUN symfony server:ca:install
+
+# Create a new system user
+RUN useradd -G www-data,sudo -u ${UID} -U  --shell /bin/bash --create-home "${USERNAME}"
+RUN  chown -R "${USERNAME}" /var/www
+
+USER "${USERNAME}"
+WORKDIR /var/www
+EXPOSE 8000
+# CMD symfony serve --allow-http --no-tls --port=8000

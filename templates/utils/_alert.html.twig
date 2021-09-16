@@ -1,0 +1,14 @@
+
+{% if app.request.hasPreviousSession %}
+	{% for label, messages in app.flashes %}
+		<div class="alert alert-{{ label }} alert-dismissible fade show mt-3 " role="alert">
+			{% for  message in messages %}
+				<p class="text-center">{{ message | raw}}</p>
+			{% endfor %}
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+	{% endfor %}
+{% endif %}
+

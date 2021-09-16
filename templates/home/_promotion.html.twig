@@ -1,0 +1,35 @@
+{% if promotions %}
+	<div class="container-md">
+		<div class="h1 text-center text-uppercase py-5">Promotions</div>
+		<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 mt-3">
+			{% for size in promotions %}
+				<div class="col mb-5">
+					<div class="card h-100 ">
+						<img src="{{asset('uploads/images/' ~ size.color.images[0].url)}}" class="card-img-top" alt="...">
+						<div class="card-body">
+							<h5 class="card-title text-dark" style="height:50px; font-weight:600;">{{ size.product.name | title }}</h5>
+							<h5 class="card-title text-center text-secondary">{{ size.price}}
+								&euro;</h5>
+
+							{% for sale in size.sales %}
+								{% if "now"|date("Y-m-d H:i:s") > sale.startDate| date("Y-m-d H:i:s") and "now"|date("Y-m-d H:i:s") < sale.endDate| date("Y-m-d H:i:s")%}
+									<p class="text-warning">
+										-
+										{{ sale.rate}}
+										% sur l'achat de
+										{{ sale.minItems}}
+										article{{sale.minItems > 1 ?'s':''}}
+									{% endif %}
+								{% endfor %}
+
+
+							</div>
+							<div class="card-footer p-0">
+								<a href="{{ path('product_show', {slug : size.product.slug , id : size.product.id}) }}" class="btn btn-dark btn-block rounded-0 py-2">VOIR +</a>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	{% endif %}

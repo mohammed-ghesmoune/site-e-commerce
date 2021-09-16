@@ -1,0 +1,88 @@
+{% include 'utils/_alert.html.twig' %}
+
+<div id="accordion_coords">
+	<div class=" collapse show " id="mescoords" data-parent="#accordion_coords">
+		<table class="table w-100 mx-auto table-striped table-hover table-borderless">
+
+			<tr>
+				<td class="position-relative container-md">
+					<div class="row">
+						<div class="mb-3 col-md-4" style="font-weight: bold">Mes coordonnées</div>
+						<div class="col-md-8">
+							<div>
+								Adresse :
+								{{ app.user.line1|replace({'_':' '})|title ?: ' Non renseigné' }}
+								{{ app.user.line2|replace({'_':' '})|title ?: '' }}
+								{{ app.user.postalcode ?: '' }}
+								{{ app.user.city|replace({'_':' '})|title ?: '' }}
+								{{ app.user.state ?: '' }}
+
+								{{ app.user.country | country_name('fr') ?: '' }}
+							</div>
+							<div>Tél :{{ app.user.phone ?: ' Non renseigné' }}</div>
+						</div>
+
+						<div class="position-absolute" style="top:10px; right:10px">
+							<i class="fa fa-pencil-square-o lead" aria-hidden="true" title="Modifier" role="button" data-toggle="collapse" data-target="#form_coords"></i>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	{{ form_start (contactInformationsForm ,{'attr':{
+        'class':'changeContactInformations col-md-6 mx-auto m-5 collapse bg-light py-3',
+        'id':'form_coords',
+		'data-parent' : '#accordion_coords',
+		'action':(path("profile")),
+        'method':'post',
+    }}) }}
+
+<div class="position-absolute" style="top:10px;right:10px ; font-size:20px">
+		<i class="fas fa-times text-dark" aria-hidden="true" title="fermer" role="button" data-toggle="collapse" data-target="#mescoords"></i>
+	</div>
+	<div class="form-group">
+		<i class="fa fa-pencil-square-o lead" aria-hidden="true"></i>
+		<span class="font-weight-bold">
+			Modifier mes coordonnées</span>
+	</div>
+	<div class=" col form-group">
+		{{ form_widget ( contactInformationsForm.line1,{'attr':{'placeholder':'* Adresse1', 'required':true}})}}
+		{{ form_errors ( contactInformationsForm.line1)}}
+	</div>
+	<div class=" col form-group">
+		{{ form_widget ( contactInformationsForm.line2,{'required' : false , 'attr':{'placeholder':'Complément d\'adresse'}})}}
+		{{ form_errors ( contactInformationsForm.line2)}}
+	</div>
+	<div class="col form-group">
+		{{ form_widget ( contactInformationsForm.city,{'attr':{'placeholder':'* Ville', 'required':true}})}}
+		{{ form_errors ( contactInformationsForm.city)}}
+	</div>
+	<div class="col form-group">
+		{{ form_widget ( contactInformationsForm.postalcode,{'attr':{'placeholder':'* Code postal','required':true}})}}
+		{{ form_errors ( contactInformationsForm.postalcode)}}
+	</div>
+	<div class="col form-group">
+		{{ form_widget ( contactInformationsForm.state,{'required' : false ,'attr':{'placeholder':'Département'}})}}
+		{{ form_errors ( contactInformationsForm.state)}}
+	</div>
+	<div class=" col form-group">
+		{{ form_widget ( contactInformationsForm.country,{'attr':{'placeholder':'* Pays ', 'required':true}})}}
+		{{ form_errors ( contactInformationsForm.country)}}
+	</div>
+	<div class="col form-group">
+		{{ form_widget ( contactInformationsForm.phone,{'required' : false ,'attr':{'placeholder':'Téléphone'}})}}
+		{{ form_errors ( contactInformationsForm.phone)}}
+	</div>
+	<input type="hidden" name="change_contact_informations" value="ok">
+	<div class="form-row pt-3 px-3 justify-content-center">
+		<div class=" col form-group">
+					<button type="reset" class="btn btn-outline-secondary btn-block rounded-0 ">Réinitialiser</button>
+		</div>
+		<div class="col form-group">
+			<button type="submit" class="btn btn-dark btn-block rounded-0">Enregistrer</button>
+		</div>
+	</div>
+
+	{{ form_end (contactInformationsForm)}}
+</div>

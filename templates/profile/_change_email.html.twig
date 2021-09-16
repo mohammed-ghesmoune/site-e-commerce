@@ -1,0 +1,51 @@
+{% include 'utils/_alert.html.twig' %}
+
+<div id="accordion_email">
+	<div class=" collapse show " id="myemail" data-parent="#accordion_email">
+		<table class="table w-100 mx-auto table-striped table-hover table-borderless">
+			<tr>
+				<td class="position-relative container-md">
+					<div class="row">
+						<div class="mb-3 col-md-4" style="font-weight: bold">Email</div>
+						<div class="col-md-8">{{ app.user.email ?: 'Email : Non renseigné' }}</div>
+					</div>
+					<div class="position-absolute" style="top:10px; right:10px">
+						<i class="fa fa-pencil-square-o lead" aria-hidden="true" title="Modifier" role="button" data-toggle="collapse" data-target="#form_email"></i>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	{{ form_start (changeEmailForm ,{'attr':{
+        'class':'changeEmail col-md-6 mx-auto m-5 collapse bg-light py-3',
+        'id':'form_email',
+        'data-parent' : '#accordion_email',
+        'action':(path("profile")),
+        'method':'post',
+    }}) }}
+
+	<div class="position-absolute" style="top:10px;right:10px ; font-size:20px">
+		<i class="fas fa-times text-dark" aria-hidden="true" title="fermer" role="button" data-toggle="collapse" data-target="#myemail"></i>
+	</div>
+
+	<div class="form-group">
+		<i class="fa fa-pencil-square-o lead" aria-hidden="true"></i>
+		<span class="font-weight-bold">
+			Modifier mon email</span>
+	</div>
+	<div class="col form-group">
+		{{ form_errors ( changeEmailForm)}}
+		{{ form_widget ( changeEmailForm)}}
+	</div>
+	<input type="hidden" name="update_email" value="ok">
+	<div class="form-row pt-3 px-3 justify-content-center">
+		<div class=" col form-group">
+			<button type="reset" class="btn btn-outline-secondary btn-block rounded-0 ">Réinitialiser</button>
+		</div>
+		<div class="col form-group">
+			<button type="submit" id="update_email" class="btn btn-dark btn-block rounded-0">Enregistrer</button>
+		</div>
+	</div>
+
+	{{ form_end (changeEmailForm)}}
+</div>

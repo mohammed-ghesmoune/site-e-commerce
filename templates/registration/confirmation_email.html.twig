@@ -1,0 +1,14 @@
+
+<h1>Veuillez confirmer votre email !</h1>
+
+<p>
+    Merci de vérifier votre adresse e-mail en cliquant sur ce lien: <br>
+    <a href="{{ signedUrl|raw }}" class="btn btn-primary">Vérifier l'adresse e-mail</a>.
+    <br>
+    Ce lien expirera dans  {{ expirationMessageKey |trans(expirationMessageData, 'VerifyEmailBundle') }}.
+    {# look config/packages/verify_email.yaml for liftime #}
+</p>
+
+<p>
+    A bientôt sur notre site!
+</p>

@@ -1,0 +1,79 @@
+
+{% include 'utils/_alert.html.twig' %}
+
+<div id="accordion_infosperso">
+	<div class=" collapse show" id="infos_persos" data-parent="#accordion_infosperso">
+		<table class="table w-100 mx-auto table-striped table-hover table-borderless">
+			<tr>
+				<td class="position-relative container-md">
+					<div class="row">
+						<div class="mb-3 col-md-4" style="font-weight: bold">Informations personnelles</div>
+						<div class="col-md-8">
+							<div>Prénom :
+								{{ app.user.firstname ?: ' Non renseigné'  }}</div>
+							<div>Nom :
+								{{ app.user.lastname ?: ' Non renseigné' }}
+							</div>
+							<div>Né(e) le :
+								{{ app.user.birthday | date('d-m-y') ?: ' Non renseigné' }}
+							</div>
+							<div>Profession :
+								{{ app.user.profession ?: ' Non renseigné' }}
+							</div>
+						</div>
+						<div class="position-absolute" style="top:10px;right:10px">
+							<i class="fa fa-pencil-square-o lead " aria-hidden="true" title="Modifier" role="button" data-toggle="collapse" data-target="#form_infos"></i>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	{{ form_start (personalInformationsForm ,{'attr':{
+        'class':'changePersonalInformations col-md-6 mx-auto m-5 collapse bg-light py-3',
+        'id':'form_infos',
+        'data-parent' : '#accordion_infosperso',
+        'action':(path("profile")),
+        'method':'post',
+    }}) }}
+
+	<div class="position-absolute" style="top:10px;right:10px ; font-size:20px">
+		<i class="fas fa-times text-dark" aria-hidden="true" title="fermer" role="button" data-toggle="collapse" data-target="#infos_persos"></i>
+	</div>
+	<div class="form-group">
+		<i class="fa fa-pencil-square-o lead" aria-hidden="true"></i>
+		<span class="font-weight-bold">
+			Modifier mes informations personnelles</span>
+	</div>
+	<div class="col form-group">
+		{{ form_widget ( personalInformationsForm.civility,{'attr':{'class':'d-flex'}})}}
+		{{ form_errors ( personalInformationsForm.civility)}}
+	</div>
+	<div class="col form-group">
+		{{ form_widget ( personalInformationsForm.firstname,{'attr':{'placeholder':'Prénom'}})}}
+		{{ form_errors ( personalInformationsForm.firstname)}}
+	</div>
+	<div class="col form-group">
+		{{ form_widget ( personalInformationsForm.lastname ,{'attr':{'placeholder':'Nom'}})}}
+		{{ form_errors ( personalInformationsForm.lastname)}}
+	</div>
+	<div class="col form-group">
+		{{ form_widget ( personalInformationsForm.birthday)}}
+		{{ form_errors ( personalInformationsForm.birthday)}}
+	</div>
+	<div class="col form-group">
+		{{ form_widget ( personalInformationsForm.profession , {'attr':{'placeholder':'Profession'}})}}
+		{{ form_errors ( personalInformationsForm.profession)}}
+	</div>
+	<input type="hidden" name="change_personal_informations" value="ok">
+	<div class="form-row pt-3 px-3 justify-content-center">
+		<div class=" col form-group">
+			<button type="reset" class="btn btn-outline-secondary btn-block rounded-0 ">Réinitialiser</button>
+		</div>
+		<div class="col form-group">
+			<button type="submit" class=" btn btn-dark btn-block rounded-0">Enregistrer</button>
+		</div>
+	</div>
+	{{ form_end (personalInformationsForm)}}
+</div>

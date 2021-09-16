@@ -1,0 +1,82 @@
+<page backtop="20mm" backbottom="30mm" backleft="10mm" backright="10mm" footer="page;date;">
+
+    <page_header></page_header>
+    <page_footer style="color:#666">
+
+        <hr style="color:#343a40;">
+        <table style="margin-top:5mm;">
+            <tr>
+                <td style="width:20%; border-right:1px solid #343a40; text-align:center">Boutique En Ligne</td>
+                <td style="width:80%; padding-left:10px;">
+                    BP 0000 - 57100 THIONVILLE CEDEX / Tél. 03 83 00 00 / contact@boutiqueenligne.fr <br>
+                    Site internet www.boutiqueEnLigne.fr / RCS de Thionvolle TI 000 000 000 / SIRET 000 000 000 00000
+                </td>
+            </tr>
+        </table>
+
+    </page_footer>
+
+    <table style="width:100% ;border-collapse:collapse;">
+        <tr>
+            <td style="width:60% ;padding-top:10px;">
+                <qrcode value="{{ orders[0].cart.id}}" ec="H" style="width: 25mm; background-color: white; color: black;"></qrcode>
+            </td>
+            <td style="width:40%;color:#000;font-size:16px;">
+                {{address.firstname}} {{address.lastname}} <br><br>
+                {{address.address}} <br>
+                {{address.postalcode}} {{address.city}}<br>
+                {{address.country}}
+            </td>
+        </tr>
+    </table>
+
+    <table style="width:100% ;border-collapse:collapse; margin-top:20mm">
+        <tr style="padding:10px">
+            <td style="width:70%;">Commande <strong> #{{ orders[0].cart.id}}</strong></td>
+            <td style="width:30%; text-align:right;">Emis le : {{ "now" | date('d/m/Y')}}</td>
+        </tr>
+    </table>
+
+    <br><br>
+    <table style="width:100% ;border-collapse:collapse;border:1px solid #f8f9fa;">
+        <tr>
+            <th colspan="2" style="border-bottom:1px solid #343a40;border-right:1px solid #343a40;"></th>
+            <th style="text-align:center; border:1px solid #343a40;padding:10px;background-color:#f8f9fa"> Prix</th>
+            <th style="text-align:center; border:1px solid #343a40;padding:10px;background-color:#f8f9fa"> Quantité</th>
+            <th style="text-align:center;border:1px solid #343a40;padding:10px;background-color:#f8f9fa"> Total article</th>
+        </tr>
+        {% for order in orders %}
+            <tr style="border:1px solid #343a40;">
+                <td style="width:20%; padding: 10px;border-left:1px solid #343a40;border-bottom:1px solid #343a40;">
+                   {# <img style="width:100%" src="{{order.size.color.images[0].url}}" alt="">#}
+                </td>
+                <td style="width:35%; padding:10px; border-right:1px solid #343a40;border-bottom:1px solid #343a40;">
+                    <div style="margin-bottom:10px; font-weight:bold;">{{order.size.product.name}}</div>
+                    <div style="font-size:10px;"> Couleur: {{order.size.color.name}} </div>
+                    <div style="font-size:10px;"> Taille : {{order.size.name}}</div>
+                </td>
+                <td style="width:15% ;text-align:center; border:1px solid  #343a40;">{{order.size.price}} €</td>
+                <td style="width:15% ;text-align:center; border:1px solid  #343a40;">{{order.quantity}}</td>
+                <td style="width:15% ;text-align:center; border:1px solid  #343a40;">{{ (order.size.price * order.quantity) | number_format(2, '.', ' ')}} €</td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td rowspan="4" colspan="2" style=" border-right:1px solid #343a40;"></td>
+            <td colspan="2" style="padding:10px ; text-align:left;">Total (HT)</td>
+            <td style="text-align:center;border-right:1px solid #343a40;">{{ orders[0].cart.amount | number_format(2, '.', ' ')}} €</td>
+        </tr>
+        <tr>
+            <td colspan="2" style="padding:10px ; text-align:left;">Frais de livraison</td>
+            <td style="text-align:center;border-right:1px solid #343a40;">{{ fee | number_format(2, '.', ' ') }} €</td>
+        </tr>
+        <tr>
+            <td colspan="2" style="padding:10px ; text-align:left;">TVA (20%)</td>
+            <td style="text-align:center;border-right:1px solid #343a40;">{{ (orders[0].cart.amount  -  orders[0].cart.amount  * 100 / (100 + 20)) | number_format(2, '.', ' ') }}€</td>
+        </tr>
+        <br>
+        <tr>
+            <td colspan="2" style="font-weight:bold;background-color:#f8f9fa; padding:10px ; text-align:left;border-bottom:1px solid  #343a40;">TOTAL (TTC)</td>
+            <td style="border-right:1px solid #343a40;font-weight:bold;background-color:#f8f9fa; text-align:center;border-bottom:1px solid #343a40;">{{ orders[0].cart.amount | number_format(2, '.', ' ')}} €</td>
+        </tr>
+    </table>
+</page>

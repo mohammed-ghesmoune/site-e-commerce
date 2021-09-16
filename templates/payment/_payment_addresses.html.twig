@@ -1,0 +1,148 @@
+{% include "utils/_alert.html.twig" %}
+
+<div class="d-flex justify-content-around p-3 mb-3">
+	<div class="number-icon rounded-circle  {{ step is same as ('billing') ? 'bg-secondary text-white' : 'bg-light' }}">1</div>
+	<div class="number-icon rounded-circle {{ step is same as ('shipping') ? 'bg-secondary text-white' : 'bg-light'}}">2</div>
+	<div class="number-icon rounded-circle {{ step is same as ('card') ? 'bg-secondary text-white' : 'bg-light'}}">3</div>
+</div>
+<h3 class=" mb-3">
+	{% if step == 'billing' %}
+		Adresse de facturation
+	{% elseif step ==  'shipping' %}
+		Adresse de livraison
+	{% else %}
+		Carte de crédit
+	{% endif %}
+</h3>
+
+<div id="accordion" class="{{ step in ['billing' , 'shipping'] ? 'd-block' : 'd-none'}}">
+	<button data-toggle="collapse" data-target="#form1" class="btn text-left btn-block btn-dark rounded-0 mb-2 {{ form.vars.valid ? '' : 'collapsed'}}">
+		Mes adresses</button>
+
+	<div id="form1" class="collapse {{ form.vars.valid ? 'show' : ''}}" data-parent="#accordion">
+		{% if addresses %}
+			<div class="py-3">
+				Sélectionnez une adresse</div>
+			<form id="form_choose_address" action=" {{path ('payment')}}" method="post">
+				{% for address in addresses %}
+					<div class="d-flex  justify-content-between border-top py-3">
+						<div class="d-flex flex-column flex-md-row justify-content-between flex-grow-1">
+							<div class="text-capitalize font-weight-bold">
+								Adresse
+								{{ loop.index}}
+								:</div>
+							<div class="text-capitalize">{{address.firstname}}
+								<br>
+								{{address.lastname}}
+							</div>
+							<div>
+								<div class="text-capitalize">{{address.line1}}
+									<br>
+									{{address.line2}}</div>
+								<div class="text-capitalize">{{address.postalcode}}
+									{{address.city}}
+									<br>
+									{{address.state}}
+									{{address.country | country_name('fr')}}
+								</div>
+								<div>Tél:
+									{{address.phone}}</div>
+							</div>
+						</div>
+						<div class="custom-control custom-radio custom-control-inline align-self-center text-right ml-5">
+							<input type="radio" class="custom-control-input " id="s{{loop.index0}}" name="id_address" value="{{address.id}}">
+							<label class="custom-control-label" for="s{{loop.index0}}"></label>
+						</div>
+					</div>
+				{% endfor %}
+				<input type="hidden" name="payment_step" value="{{ step }}">
+				<input type="hidden" name="choose_address" value="choose_address">
+				<div class="form-row pt-3 border-top">
+					<div class=" col-md-6 form-group">
+						<a type="button" class="btn btn-outline-secondary d-block rounded-0" href="{{ path('cart')}} ">
+							Retourner au panier</a>
+					</div>
+					<div class="col-md-6 form-group">
+						<button type="submit" id="choose_address" class="btn btn-dark btn-block rounded-0">
+							Continuer
+						</button>
+					</div>
+				</div>
+			</form>
+		{% else %}
+			<div class="py-3 text-center">
+				Votre carnet d'adresses est vide.</div>
+		{% endif %}
+	</div>
+	<button data-toggle="collapse" data-target="#form2" class="btn text-left btn-block btn-dark rounded-0 mb-2 {{ form.vars.valid ? 'collapsed' : ''}}">
+		Nouvelle adresse</button>
+
+	<div id="form2" class="collapse pt-3 {{ form.vars.valid ? '' : 'show'}}" data-parent="#accordion">
+
+		{{ form_start (form,{'attr':{'id':'form_new_address','action':(path("payment")),'method':'post'}})}}
+		{{ form_row (form)}}
+		<input type="hidden" name="payment_step" value="{{ step }}">
+		<input type="hidden" name="new_address" value="new_address">
+
+		<div class="form-row pt-3 ">
+			<div class=" col-md-6 form-group">
+				<a type="button" class="btn btn-outline-secondary d-block rounded-0" href="{{ path('cart')}} ">
+					Retourner au panier</a>
+			</div>
+			<div class="col-md-6 form-group">
+				<button type="submit" id="new_address" class="btn btn-dark btn-block rounded-0" {#formnovalidate#}>
+					Continuer
+				</button>
+			</div>
+		</div>
+		{{form_end (form)}}
+
+	</div>
+</div>
+
+<div class=" pt-5 {{ step is same as ('card') ? 'd-block' : 'd-none'}}">
+	<form id="payment-form" class="form">
+		<div
+			id="payment-errors" class="alert alert-danger d-none"><!-- We'll put payment error messages in this element -->
+		</div>
+		<div class="form-group">
+			<label for="cardholder-name" class="small">Nom </label>
+			<input type="text" class="form-control" id="cardholder-name" placeholder=" * Titulaire de la carte" required>
+		</div>
+		<div class='test-cards bg-light p-3 mb-2'>
+			<p class="lead">Essayez une carte de test
+			</p>
+			<p>
+				<div>
+					<code>4242 4242 4242 4242</code>
+					(Visa)
+				</div>
+				<div>
+					<code>5555 5555 5555 4444</code>
+					(Mastercard)
+				</div>
+				<div>
+					<code>4000 0025 0000 3155</code>
+					(3DSecure)</div>
+			</p>
+		</div>
+		<div
+			class="form-group " id="card-element"><!-- Elements will create input elements here -->
+		</div>
+		<div
+			id="card-errors" class=" text-danger" role="alert"><!-- We'll put the card error messages in this element -->
+		</div>
+		<div class="form-row pt-3 ">
+			<div class=" col-md-6 form-group">
+				<button type="reset" class="btn btn-outline-secondary btn-block rounded-0" {#href="{{ path('cart')}}"#}>
+					Réinitialiser</button>
+			</div>
+			<div class="col-md-6 form-group">
+				<button id="card-button" type="button" class="btn btn-success btn-block rounded-0" data-secret="{{client_secret ?? ''}}" data-redirect="{{ url('invoice')}}">
+					Payer
+				</button>
+			</div>
+		</div>
+
+	</form>
+</div>

@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Nouveau product
+{% endblock %}
+
+{# 'bootstrap_4_horizontal_layout.html.twig',  #}
+{% form_theme form with [
+	'bootstrap_4_layout.html.twig',
+	'product/_form_theme.html.twig'
+	] %}
+
+{% block body %}
+	<div class="container-md mt-5">
+		<h1 class="mb-3">
+			Ajouter un nouveau produit</h1>
+
+		{{ form_start(form) }}
+
+		{{ form_widget(form) }}
+
+		<button type="submit" class="btn btn-primary" {#formnovalidate#}>Ajouter le produit</button>
+
+		{{ form_end(form) }}
+	</div>
+{% endblock %}
+
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="/js/product/form_theme.js"></script>
+
+{% endblock %}

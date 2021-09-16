@@ -1,0 +1,120 @@
+{% include 'utils/_alert.html.twig' %}
+
+{% for addressForm in addressesForms %}
+	{% set k = loop.index %}
+	{% set address = addresses[loop.index0] %}
+
+	<div id="accordion_address{{k}}">
+		<div class="collapse show " id="address{{k}}" data-parent="#accordion_address{{k}}">
+			<table class="table w-100 mx-auto table-striped table-hover table-borderless">
+
+				<tr>
+					<td class="position-relative container-md">
+						<div class="row">
+							<div class="mb-3 col-md-4" style="font-weight: bold">Adresse{{k}}:</div>
+							<div class="col-md-8">
+								<div>Prénom:
+									{{ address.firstname}}</div>
+								<div>Nom:
+									{{address.lastname}}
+								</div>
+								<div>Adresse:
+									{{address.line1}}
+									{{address.line2}}
+									{{address.postalcode}},
+									{{address.city}}
+									{{address.state }}
+									-
+									{{ address.country | country_name('fr') }}
+								</div>
+								<div>
+									Tél:
+									{{address.phone}}
+								</div>
+							</div>
+							<div class=" d-flex justify-content-center position-absolute" style="top:10px; right:10px">
+								<i class="fa fa-pencil-square-o lead" aria-hidden="true" title="Modifier" role="button" data-toggle="collapse" data-target="#form_address{{k}}"></i>
+								<i class="fa fa-trash  lead ml-3 deleteAddress" data-address="{{k}}" aria-hidden="true" title="Supprimer" role="button"></i>
+							</form>
+						</div>
+					</td>
+				</tr>
+			</td>
+		</tr>
+	</table>
+</div>
+
+{{ form_start ( addressForm ,{"attr":{
+            "class": " changeAddress col-md-6 mx-auto mt-5 collapse bg-light py-3",
+            "id": "form_address#{k}" ,
+			'data-parent' : "#accordion_address#{k}",
+			'action':(path("profile")),
+             'method':'post',
+
+        }})}}
+
+<div class="position-absolute" style="top:10px;right:10px ; font-size:20px">
+	<i class="fas fa-times text-dark" aria-hidden="true" title="fermer" role="button" data-toggle="collapse" data-target="#address{{k}}"></i>
+</div>
+<div class="form-group">
+	<i class="fa fa-pencil-square-o lead" aria-hidden="true"></i>
+	<span class="font-weight-bold">
+		Modifier l'adresse
+		{{loop.index}}
+	</span>
+</div>
+<div class="col form-group">
+	{{ form_errors ( addressForm.civility)}}
+	{{ form_widget ( addressForm.civility,{'attr':{'class':'d-flex', 'required':true}})}}
+</div>
+<div class="col form-group">
+	{{ form_errors ( addressForm.firstname)}}
+	{{ form_widget ( addressForm.firstname,{'attr':{'placeholder':'* Prénom', 'required':true}})}}
+</div>
+<div class="col form-group">
+	{{ form_errors ( addressForm.lastname)}}
+	{{ form_widget ( addressForm.lastname ,{'attr':{'placeholder':'* Nom', 'required':true}})}}
+</div>
+<div class=" col form-group">
+	{{ form_errors (  addressForm.line1)}}
+	{{ form_widget (  addressForm.line1,{'attr':{'placeholder':'* Adresse', 'required':true}})}}
+</div>
+<div class=" col form-group">
+	{{ form_errors (  addressForm.line2)}}
+	{{ form_widget (  addressForm.line2,{'attr':{'placeholder':'Complément d\'adresse'}})}}
+		</div>
+		<div class="col form-group">
+			{{ form_errors (  addressForm.city)}}
+			{{ form_widget (  addressForm.city,{'attr':{'placeholder':'* Ville'}})}}
+		</div>
+		<div class="col form-group">
+			{{ form_errors (  addressForm.postalcode)}}
+			{{ form_widget (  addressForm.postalcode,{'attr':{'placeholder':'* Code postal','required':true}})}}
+		</div>
+		<div class="col form-group">
+			{{ form_errors (  addressForm.state)}}
+			{{ form_widget (  addressForm.state,{'attr':{'placeholder':'Département'}})}}
+		</div>
+		<div class=" col form-group">
+			{{ form_errors (  addressForm.country)}}
+			{{ form_widget (  addressForm.country,{'attr':{'placeholder':'* Pays' , 'required':true}})}}
+		</div>
+		<div class="col form-group">
+			{{ form_errors (  addressForm.phone)}}
+			{{ form_widget (  addressForm.phone,{'attr':{'placeholder':'* Téléphone'}})}}
+		</div>
+		<input type="hidden" name="update_address" value="{{k}}">
+		<div class="form-row pt-3 px-3 justify-content-center">
+			<div class=" col form-group">
+				<button type="reset" class="btn btn-outline-secondary btn-block rounded-0 ">Réinitialiser</button>
+
+			</div>
+			<div class="col form-group">
+				<button type="submit"  class="btn btn-dark btn-block rounded-0">Enregistrer</button>
+			</div>
+		</div>
+		{{ form_end (addressForm )}}</div>
+{% else %}
+	<div class="py-3 text-center">
+		Votre carnet d'adresses est vide</div>
+{% endfor %}

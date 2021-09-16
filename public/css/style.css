@@ -1,0 +1,366 @@
+* {
+    font-family: century gothic, arial;
+}
+
+
+html {
+    font-size: 15px;
+    scroll-behavior: smooth;
+}
+
+body {
+    position: relative;
+}
+
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+label {
+    margin-bottom: 5px!important;
+}
+
+.card {
+    position: relative;
+}
+
+.card-btn-footer {
+    display: block;
+    position: absolute;
+    bottom: 0;
+}
+
+.filterForm {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    transition: 0.5s;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.filterForm .closebtn, .sideNav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 1rem;
+    font-size: 36px;
+}
+.closeForm{
+    position: absolute;
+    top: -5px;
+    right: 5px;
+    /* font-size: 36px; */
+}
+
+.sortable, .asc, .desc {
+    color: grey;
+    margin-right: 1rem;
+}
+
+.asc:hover, .desc:hover, .sortable:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.cat-item {
+    border: 2px solid gray;
+}
+
+.pagination li a {
+    color: black;
+}
+
+.page-item.active .page-link {
+    background-color: grey;
+    border-color: gray;
+}
+
+/* nav bar*/
+
+.bar1, .bar2, .bar3 {
+    width: 30px;
+    height: 4px;
+    background-color: black;
+    margin: 4px 0;
+    transition: 0.4s;
+}
+
+/* Rotate first bar */
+
+.change .bar1 {
+    /* -webkit-transform: rotate(-45deg) translate(-4px, 6px); */
+    transform: translate(0, 8px) rotate(-45deg);
+}
+
+/* Fade out the second bar */
+
+.change .bar2 {
+    opacity: 0;
+}
+
+/* Rotate last bar */
+
+.change .bar3 {
+    transform: translate(0, -8px) rotate(45deg);
+}
+
+.change .bar1, .change .bar2, .change .bar3 {
+    z-index: 10;
+}
+
+#main {
+    transition: margin-left .5s;
+}
+
+.sideNav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    overflow-x: hidden;
+    transition: width 0.5s;
+}
+
+#sideNavAccordion {
+    height: 100%;
+    width: 300px;
+    background-color: white;
+    position: relative;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.sideNav .dropdownWithAfter {
+    position: relative;
+}
+
+.sideNav .dropdownWithAfter>i {
+    position: absolute;
+    top: 10px;
+    right: 5px; 
+    color: inherit;
+    transition: transform .3s linear ;
+}
+
+.margin_left {
+    margin-left: 300px;
+}
+
+.number-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    height: 3rem;
+    width: 3rem;
+    margin-right: 0.5rem;
+}
+
+/* home page */
+
+.home-carousel-background {
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-blend-mode: overlay;
+    background-color: rgba(0, 0, 0, 0.4);
+    height: 90vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.home-carousel-title {
+    color: white;
+    font-size: 6rem;
+    text-transform: uppercase;
+}
+
+.home-carousel-button {
+    color: white;
+    font-size: 16px;
+    text-transform: uppercase;
+    border: 2px solid white;
+    padding: 10px;
+}
+
+.home-carousel-button:hover {
+    text-decoration: none;
+    color: white;
+    background-color: #111;
+}
+
+.home-carousel-image {
+    object-fit: cover;
+}
+
+#colorSection .form-check {
+    margin-bottom: 5px;
+}
+
+#filter_Color {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+}
+
+#filter_Color .form-check {
+    flex-basis: 30%;
+}
+
+#filter_SizeMin, #filter_SizeMax {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+}
+
+#filter_SizeMin .form-check, #filter_SizeMax .form-check {
+    flex-basis: 30%;
+}
+
+footer .social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
+    width: 3rem;
+    margin-right: 0.5rem;
+}
+
+footer .bel {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
+}
+
+footer .social-icon i::before {
+    font-size: 1.2rem;
+}
+
+.header .social-icon-nav, .sideNav .social-icon-nav {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 3.5rem;
+    width: 3.5rem;
+    margin-right: 1.5rem;
+    color: black;
+    font-size: 14px;
+}
+
+.header .social-icon-nav:hover, .sideNav .social-icon-nav:hover {
+    text-decoration: none;
+}
+
+.header .social-icon-nav::after, .sideNav .social-icon-nav::after {
+    display: none;
+}
+
+.header .navbar-nav .dropdown-menu {
+    position: absolute;
+}
+
+.header .nav-link , header .dropdown-toggle.submenu{
+    border-bottom: 2px solid #fff;
+    text-decoration: none;
+}
+.header .nav-link:hover, .header .dropdown-toggle.submenu:hover , .header .nav-link.active, .header .dropdown-toggle.submenu.active{
+    border-bottom: 2px solid #111;
+}
+
+.header .navbar-brand {
+    padding: 1rem;
+    color: black;
+}
+
+#sort-products {
+    padding: 0 !important;
+}
+
+#sort-products a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: .375rem .75rem;
+}
+
+#se-connecter,
+#inscrivez-vous {
+    border: 1px solid #ccc;
+    color: #ccc;
+
+}
+#se-connecter:hover,
+#inscrivez-vous:hover,
+#se-connecter.active,
+#inscrivez-vous.active {
+    border-bottom: 2px solid #111;
+    color: inherit;
+    font-weight: bold;
+
+}
+
+.back-to-top {
+    visibility:hidden;
+    opacity:0;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 12px !important;
+    right: 17px;
+    bottom: 10px;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    border-radius: 2px;
+    z-index: 99;
+    height: 30px;
+    width: 30px;
+    background-color: #333;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: All 0.1s linear, bottom 0.1s linear;
+  }
+  
+  .back-to-top:hover {
+    background-color: #d1b7b2;
+  }
+
+@media only screen and (max-width: 767px) {
+    html {
+        font-size: 14px !important;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    html {
+        font-size: 13px !important;
+    }
+}

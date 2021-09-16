@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}List Products
+{% endblock %}
+
+
+{% block body %}
+	<div class="container-md mt-5">
+
+
+		<!-- fiter form -->
+			<div id="filterForm" class="filterForm shadow "> <div class="px-3 py-5 h-100 bg-white" style="width:350px; overflow:auto; position:relative; z-index:3;">
+				<span id="closeFilterFormButton" class="closebtn" role="button">
+					&times;</span>
+				<div class="text-center h3 mb-3">Filter</div>
+				{{ form_start( filter_form,{'attr':{'id':'filter-form','action':(path("product_list") ) }}) }}
+				{#{{ form_widget( filter_form) }}#}
+				<div data-target="#categorySection" data-toggle="collapse" role="button" class="font-weight-bold text-uppercase border-top py-2">Catégorie</div>
+				<div id="categorySection" class="collapse">
+					{{ form_row( filter_form.Category) }}
+				</div>
+				<div data-target="#subCategorySection" data-toggle="collapse" role="button" class="font-weight-bold text-uppercase border-top py-2">Sous Catégorie</div>
+				<div id="subCategorySection" class="collapse">
+					{{ form_row( filter_form.SubCategory) }}
+				</div>
+				<div data-target="#colorSection" data-toggle="collapse" role="button" class="font-weight-bold text-uppercase border-top py-2">Couleur</div>
+				<div id="colorSection" class="collapse">
+					{{ form_row( filter_form.Color) }}
+				</div>
+				<div data-target="#sizeSection" data-toggle="collapse" role="button" class="font-weight-bold text-uppercase border-top py-2">Taille</div>
+				<div id="sizeSection" class="collapse">
+					{{ form_row( filter_form.SizeMin) }}
+					{{ form_row( filter_form.SizeMax) }}
+				</div>
+				<div data-target="#priceSection" data-toggle="collapse" role="button" class="font-weight-bold text-uppercase border-top py-2">Prix</div>
+				<div id="priceSection" class="collapse">
+					{{ form_row( filter_form.PriceMin) }}
+					{{ form_row( filter_form.PriceMax) }}
+				</div>
+
+				<div class="form-row pt-3  justify-content-center">
+					<div class=" col form-group">
+						<button type="reset" class="btn btn-outline-secondary btn-block rounded-0" onclick="resetFilterForm()">Réinitialiser</button>
+					</div>
+					<div class="col form-group">
+						<button type="submit" class="btn btn-dark btn-block rounded-0">Filtrer</button>
+					</div>
+				</div>
+				{{ form_end( filter_form) }}
+			</div>
+		</div>
+		{# <!-- filter and sort buttons -->
+		<div class="d-flex justify-content-start">
+			<button id="openFilterFormButton" class="text-uppercase btn btn-outline-secondary mr-3">FILTRER</button>
+			<button class="text-uppercase btn btn-outline-secondary" id="sort-products">
+				{{ knp_pagination_sortable(products, 'TRIER PAR PRIX', 'si.price') }}
+			</button>
+		</div> #}
+
+		<!-- product list -->
+		<div id="list-product" style="min-height:35vh">
+			{{ include('product/_list_product.html.twig')}}
+		</div>
+		
+											
+					
+
+	</div>
+{% endblock %}
+
+
+{#
+				 <a class="dropdown-item" href="{{ path('product_list', { category : app.request.attributes.get('category') , subCategory: app.request.attributes.get('subCategory') , sort: 'p.name' , dir : 'ASC'}) }}">ORDRE ALPHABETIQUE</a>
+				<a class="dropdown-item" href="{{ path('product_list', { category : app.request.attributes.get('category') , subCategory: app.request.attributes.get('subCategory') , sort: 'si.price' , dir :'ASC'}) }}">PRIX CROISSANT</a>
+				<a class="dropdown-item" href="{{ path('product_list', { category : app.request.attributes.get('category') , subCategory: app.request.attributes.get('subCategory') , sort: 'si.price' , dir : 'DESC'}) }}">PRIX DECROISSANT</a>		
+				 #}
+
+
+{% block javascripts %}
+	{{ parent()}}
+	<script src="{{ asset('js/filter-form.js') }}"></script>
+
+{% endblock %}

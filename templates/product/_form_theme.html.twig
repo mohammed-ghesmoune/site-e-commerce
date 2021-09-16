@@ -1,0 +1,101 @@
+{% block _product_colors_widget %}
+	{{ form_widget(form) }}
+
+	<input type="hidden" id="color-counter" value="0">
+	<div class="form-group">
+		<button type="button" id="add-color" class="btn btn-warning">
+			ajouter une couleur pour ce produit
+		</button>
+	</div>
+{% endblock %}
+{% block _product_colors_entry_widget %}
+	<div class="form-group color" id="block_{{id}}">
+		<div class="row mb-3">
+			<div class="col-2">
+				{{ form_label(form.name)}}
+			</div>
+			<div class="col-8">
+				{{ form_widget(form.name)}}
+			</div>
+			<div class="col-2">
+				<button type="button" data-action="delete-color" data-target="#block_{{id}}" class="btn btn-danger">
+					X
+				</button>
+			</div>
+		</div>
+		<div class="">
+			{{ form_label(form.images)}}
+			{{ form_widget(form.images)}}
+		</div>
+		<div class="">
+			{{ form_label(form.sizes)}}
+			{{ form_widget(form.sizes)}}
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block _product_colors_entry_images_widget %}
+	{{ form_widget(form) }}
+	<input type="hidden" id="image_counter_{{id}}" value="0">
+
+	<div class="form-group ">
+		<button type="button" data-action="add-image" data-parent="#{{id}} " class="btn btn-info">
+			ajouter une image pour cette couleur
+		</button>
+	</div>
+{% endblock %}
+
+{% block _product_colors_entry_images_entry_widget %}
+	<div class="form-group image" id="block_{{id}}">
+		<div class="row mb-3">
+			<div class="col-2">
+				{{ form_label(form.imageURL) }} 
+			</div>
+			<div class="col-8">
+				{{ form_widget(form.imageURL)}}
+			</div>
+			<div class="col-2">
+				<button type="button" data-action="delete-image" data-target="#block_{{id}}" class="btn btn-danger">
+					X
+				</button>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block _product_colors_entry_sizes_widget %}
+	{{ form_widget(form) }}
+
+	<input type="hidden" id="size_counter_{{id}}" value="0">
+
+	<div class="form-group ">
+		<button type="button" data-action="add-size" data-parent="#{{id}} " class="btn btn-secondary">
+			ajouter une taille pour cette couleur
+		</button>
+	</div>
+{% endblock %}
+
+{% block _product_colors_entry_sizes_entry_widget %}
+	<div class="form-group size" id="block_{{id}}">
+		<div class="row mb-3">
+			<div class="col">
+				{{ form_widget(form.name)}}
+			</div>
+			<div class="col">
+				{{ form_widget(form.price)}}
+			</div>
+			<div class="col">
+				{{ form_widget(form.stock)}}
+			</div>
+			<div class="col">
+				{{ form_widget(form.deleted)}}
+			</div>
+			<div class="col-2">
+				<button type="button" data-action="delete-size" data-target="#block_{{id}}" class="btn btn-danger">
+					X
+				</button>
+			</div>
+		</div>
+	</div>
+{% endblock %}
