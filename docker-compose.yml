@@ -6,13 +6,14 @@ services:
   php:
     depends_on: 
       - database
-    build: ./docker-config/php-composer-symfony
+    build: ./docker-config/php
     image: boutique-php:7.4
     container_name: boutique_php
     ports:
       - "8080:8000"
     volumes: 
       - ./:/var/www
+      - ./docker-config/php/conf.d/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
     networks:
       - boutique_net
 

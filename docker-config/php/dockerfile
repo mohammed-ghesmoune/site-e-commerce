@@ -36,6 +36,8 @@ cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini \
 && pecl install apcu && docker-php-ext-enable apcu \
 && docker-php-ext-install opcache pdo pdo_mysql 
 RUN docker-php-ext-install xml &&  docker-php-ext-enable xml
+RUN pecl install xdebug  && docker-php-ext-enable xdebug 
+ 
 RUN \
 # install composer
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \

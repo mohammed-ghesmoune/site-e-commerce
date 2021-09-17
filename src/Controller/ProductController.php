@@ -127,8 +127,6 @@ class ProductController extends AbstractController
      */
     public function list(PaginatorInterface $paginator, Request $request, $category, $subCategory, EntityManagerInterface $em, SubCategoryRepository $rp): Response
     {
-
-        //dd($rp->getUniqueValues());
         $categories = $this->categoryRepository->findAllWithSubCategories();
 
         $filterForm = $this->createForm(FilterType::class);
