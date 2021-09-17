@@ -33,9 +33,8 @@ class FilterType extends AbstractType
                 'class' => SubCategory::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('sc')
-                        ->distinct('sc.name')
-                        //->groupBy('sc.name')
-                        ->orderBy('sc.name', 'ASC');
+                    ->orderBy('sc.name','ASC');
+                   
                 },
                 'choice_label' => 'name',
                 'required' => false,
@@ -49,8 +48,7 @@ class FilterType extends AbstractType
                 'class' => Color::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('co')
-                        ->distinct('co.name')
-                        //->groupBy('co.name')
+                        // ->groupBy('co.name')
                         ->orderBy('co.name', 'ASC');
                 },
                 'choice_label' => 'name',
@@ -65,8 +63,7 @@ class FilterType extends AbstractType
                 'class' => Size::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('si')
-                        ->distinct('si.name')
-                      //  ->groupBy('si.name')
+                        // ->groupBy('si.name')
                         ->orderBy('si.name', 'ASC');
                 },
                 'choice_label' => 'name',
@@ -80,8 +77,7 @@ class FilterType extends AbstractType
                 'class' => Size::class,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('si')
-                        ->distinct('si.name')
-                      //  ->groupBy('si.name')
+                        // ->groupBy('si.name')
                         ->orderBy('si.name', 'ASC');
                 },
                 'choice_label' => 'name',

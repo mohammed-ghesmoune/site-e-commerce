@@ -115,7 +115,7 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
                 if ($target !== "/verify/email") {
                     $this->tokenStorage->setToken(null);
                     $request->getSession()->invalidate(0);
-                    $this->session->getFlashBag()->add('warning', 'Merci de confirmer l\'adresse e-mail de votre compte en cliquant sur le lien qui vous a été envoyé');
+                    $this->session->getFlashBag()->add('warning', 'Merci de valider l\'adresse e-mail associée à votre compte en cliquant sur le lien qui vous a été envoyé');
                     return new RedirectResponse($this->urlGenerator->generate('login'));
 
                 }
@@ -124,7 +124,7 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
                 $this->entityManager->flush();
                 $this->tokenStorage->setToken(null);
                 $request->getSession()->invalidate(0);
-                $this->session->getFlashBag()->add('danger', 'Le lien pour confirmer l\'adresse e-mail de votre compte a expiré. Veuillez vous réinscrire.');
+                $this->session->getFlashBag()->add('danger', 'Le lien de validation de l\'adresse e-mail associée à compte a expiré. Veuillez vous réinscrire.');
                 return new RedirectResponse($this->urlGenerator->generate('register'));
             }
         }

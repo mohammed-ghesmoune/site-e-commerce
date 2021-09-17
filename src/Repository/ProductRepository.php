@@ -55,7 +55,7 @@ class ProductRepository extends ServiceEntityRepository
 
         if ($searchParam) {
             $qb->andWhere('p.name LIKE :productName')
-                ->setParameter('productName', '%' . $searchParam . '%');
+                ->setParameter('productName', '%' . trim($searchParam) . '%');
         }
 
         if ($filterData) {
@@ -124,7 +124,6 @@ class ProductRepository extends ServiceEntityRepository
                     ->setParameter('subCategory', $subCategory);
             }
         }
-        //dd($qb->getQuery());
         return $qb->getQuery();
     }
 

@@ -28,10 +28,12 @@ class ResetPasswordController extends AbstractController
     use ResetPasswordControllerTrait;
 
     private $resetPasswordHelper;
+    private $emailSender;
 
-    public function __construct( ResetPasswordHelperInterface $resetPasswordHelper)
+    public function __construct( ResetPasswordHelperInterface $resetPasswordHelper,$emailSender)
     {
         $this->resetPasswordHelper = $resetPasswordHelper;
+        $this->emailSender=$emailSender;
     }
 
     /**
@@ -176,7 +178,7 @@ class ResetPasswordController extends AbstractController
         }
 
         $email = (new TemplatedEmail())
-            ->from(new Address('contact.boutiqueenligne2021@gmail.com', 'Boutique En Ligne'))
+            ->from(new Address($this->emailSender, 'Boutique En Ligne'))
             ->to($user->getEmail())
             ->subject('Demande de réinitialisation de mot de passe')
             ->htmlTemplate('reset_password/email.html.twig')

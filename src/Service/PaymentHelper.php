@@ -24,10 +24,10 @@ class PaymentHelper
     private $formFactory;
     private $orderRepository;
 
-    public function __construct(OrderRepository $orderRepository, RequestStack $requestStack, EntityManagerInterface $entityManager, FormFactoryInterface $formFactory, UserRepository $userRepository, AddressRepository $addressRepository)
+    public function __construct(OrderRepository $orderRepository, RequestStack $requestStack, EntityManagerInterface $entityManager, FormFactoryInterface $formFactory, UserRepository $userRepository, AddressRepository $addressRepository, $stripeKey)
     {
 
-        $this->stripe =  new \Stripe\StripeClient($_SERVER['STRIPE_KEY']);
+        $this->stripe =  new \Stripe\StripeClient($stripeKey);
         $this->entityManager = $entityManager;
         $this->request = $requestStack->getCurrentRequest();
         $this->session = $this->request->getSession();

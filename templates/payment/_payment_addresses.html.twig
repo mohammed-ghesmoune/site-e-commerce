@@ -80,7 +80,46 @@
 	<div id="form2" class="collapse pt-3 {{ form.vars.valid ? '' : 'show'}}" data-parent="#accordion">
 
 		{{ form_start (form,{'attr':{'id':'form_new_address','action':(path("payment")),'method':'post'}})}}
-		{{ form_row (form)}}
+		<div class="col form-group">
+	{{ form_errors ( form.civility)}}
+	{{ form_widget ( form.civility,{'attr':{'class':'d-flex', 'required':true}})}}
+</div>
+<div class="col form-group">
+	{{ form_errors ( form.firstname)}}
+	{{ form_widget ( form.firstname,{'attr':{'placeholder':'* Prénom', 'required':true}})}}
+</div>
+<div class="col form-group">
+	{{ form_errors ( form.lastname)}}
+	{{ form_widget ( form.lastname ,{'attr':{'placeholder':'* Nom', 'required':true}})}}
+</div>
+<div class=" col form-group">
+	{{ form_errors (  form.line1)}}
+	{{ form_widget (  form.line1,{'attr':{'placeholder':'* Adresse', 'required':true}})}}
+</div>
+<div class=" col form-group">
+	{{ form_errors (  form.line2)}}
+	{{ form_widget (  form.line2,{'attr':{'placeholder':'Complément d\'adresse'}})}}
+		</div>
+		<div class="col form-group">
+			{{ form_errors (  form.city)}}
+			{{ form_widget (  form.city,{'attr':{'placeholder':'* Ville'}})}}
+		</div>
+		<div class="col form-group">
+			{{ form_errors (  form.postalcode)}}
+			{{ form_widget (  form.postalcode,{'attr':{'placeholder':'* Code postal','required':true}})}}
+		</div>
+		<div class="col form-group">
+			{{ form_errors (  form.state)}}
+			{{ form_widget (  form.state,{'attr':{'placeholder':'Département'}})}}
+		</div>
+		<div class=" col form-group">
+			{{ form_errors (  form.country)}}
+			{{ form_widget (  form.country,{'attr':{'placeholder':'* Pays' , 'required':true}})}}
+		</div>
+		<div class="col form-group">
+			{{ form_errors (  form.phone)}}
+			{{ form_widget (  form.phone,{'attr':{'placeholder':'* Téléphone'}})}}
+		</div>
 		<input type="hidden" name="payment_step" value="{{ step }}">
 		<input type="hidden" name="new_address" value="new_address">
 

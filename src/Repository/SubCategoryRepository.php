@@ -19,6 +19,15 @@ class SubCategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, SubCategory::class);
     }
 
+    public function getUniqueValues(){
+        return $this->createQueryBuilder('sc')
+               ->select(['sc.name','count(sc.id)'])
+               ->groupBy('sc.name')
+               ->orderBy('sc.name','ASC')
+               ->getQuery()
+               ->getResult();
+    }
+
     // /**
     //  * @return SubCategory[] Returns an array of SubCategory objects
     //  */

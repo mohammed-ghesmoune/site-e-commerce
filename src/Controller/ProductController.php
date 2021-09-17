@@ -20,6 +20,7 @@ use App\Repository\SizeRepository;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\SubCategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -124,9 +125,10 @@ class ProductController extends AbstractController
      * @Route("/product/{category?}/{subCategory?}", name="product_list"
      * )
      */
-    public function list(PaginatorInterface $paginator, Request $request, $category, $subCategory, EntityManagerInterface $em): Response
+    public function list(PaginatorInterface $paginator, Request $request, $category, $subCategory, EntityManagerInterface $em, SubCategoryRepository $rp): Response
     {
 
+        //dd($rp->getUniqueValues());
         $categories = $this->categoryRepository->findAllWithSubCategories();
 
         $filterForm = $this->createForm(FilterType::class);
